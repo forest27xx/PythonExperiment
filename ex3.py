@@ -61,7 +61,7 @@ for k in range(1):
         # 片名
         name = movie_soup.find('span', {'property': 'v:itemreviewed'}).text.split(' ')[0]
         # 英文名
-        eng_name = movie_soup.find('span', {'property': 'v:itemreviewed'}).text.split(' ')[1:]
+        eng_name = ' '.join(movie_soup.find('span', {'property': 'v:itemreviewed'}).text.strip().split(' ')[1:])
         plot_summary_tag = movie_soup.find('span', class_='all hidden')
         if plot_summary_tag:
             plot_summary = plot_summary_tag.get_text(strip=True)
