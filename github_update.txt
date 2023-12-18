@@ -1,4 +1,4 @@
 git status
-git add .
+git add
 git commit -m "update"
-git push -u oorigin main
+git push -u origin main

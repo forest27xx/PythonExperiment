@@ -62,11 +62,16 @@ for k in range(1):
         name = movie_soup.find('span', {'property': 'v:itemreviewed'}).text.split(' ')[0]
         # 英文名
         eng_name = ' '.join(movie_soup.find('span', {'property': 'v:itemreviewed'}).text.strip().split(' ')[1:])
-        plot_summary_tag = movie_soup.find('span', class_='all hidden')
+        # 电影简介
+        plot_summary_tag = movie_soup.find('span', {'property':'v:summary'})
         if plot_summary_tag:
             plot_summary = plot_summary_tag.get_text(strip=True)
-        else:
-            plot_summary = '无剧情简介'
+        #电影影评
+        Film_critics_tag = movie_soup.find('p', {'class': 'comment-content'})
+        if Film_critics_tag:
+            Film_critics = Film_critics_tag.get_text(strip=True)
+        # 电影介绍链接
+        link = href
         # 上映年份
         year = movie_soup.find('span', {'class': 'year'}).text.replace('(', '').replace(')', '')
         # 评分
@@ -107,16 +112,18 @@ for k in range(1):
         datas.append({
             '片名': name,
             '英文名':eng_name,
+            '正文链接':link,
             '上映年份': year,
             '评分': score,
             '评价人数': votes,
             '导演': director,
             '编剧': scriptwriter,
             '主演': actor,
-            '类型': filmtype,
             '国家/地区': area,
+            '类型': filmtype,
             '语言': language,
             '时长(分钟)': times,
+            '影评':Film_critics,
             '剧情简介': plot_summary
         })
         print("电影《{0}》已爬取完成...".format(name))
